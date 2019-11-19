@@ -1,0 +1,1 @@
+http://ctan.math.washington.edu/tex-archive/macros/latex/contrib/fancytooltips/examples/pics/tecna2.pdf

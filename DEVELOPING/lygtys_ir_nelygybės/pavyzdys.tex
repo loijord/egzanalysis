@@ -1,0 +1,473 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage{graphicx}
+
+\usepackage[utf8]{inputenc}
+\usepackage[L7x]{fontenc}
+\usepackage[lithuanian]{babel}
+\usepackage{amssymb, amsmath, amsthm}
+\usepackage{enumerate}
+\usepackage{hyperref}
+\usepackage{a4wide}
+\usepackage[usenames]{color}
+\usepackage{soul}
+\usepackage[all]{xy}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage[table]{xcolor}
+\usepackage{booktabs}
+\usepackage{verbatim}
+\usepackage{rotating}
+\usepackage{xtab}
+\usepackage{lmodern}
+\usepackage{multicol} %skelsim teksta i kelis stulpelius
+\usepackage[makeroom]{cancel}
+\usepackage{tasks} %atsakymu variantai
+\usepackage[top=2cm, bottom=1.5cm, left=1.5cm, right=2cm, footskip=1cm, a4paper]{geometry}
+\usepackage[tracking=true]{microtype}
+\usepackage{caption} %setting not to label image
+
+
+
+% '1 skyrius' vietoj 'skyrius 1'
+\usepackage{fncychap}
+\usepackage{fancyhdr}
+
+\makeatletter
+    \renewcommand{\DOCH}{%                                     
+    \CNoV\thechapter \space \CNV\FmN{\@chapapp} \par\nobreak
+    \vskip 40\p@}
+\makeatother
+
+
+%% Numbered objects of "theorem" style (text italicized).
+%% The optional parameters indicate that all objects are numbered together, and "by section"
+
+
+%\usepackage{chngcntr}
+%\counterwithout{table}{chapter}
+%\counterwithout{figure}{section}
+
+\numberwithin{table}{chapter}
+\numberwithin{figure}{chapter}
+
+
+
+
+\pagestyle{plain}
+
+\swapnumbers
+\newtheorem{teorema}{teorema}%[chapter]%[section]
+\newtheorem{isvada}[teorema]{išvada}
+\newtheorem{lema}[teorema]{lema}
+\newtheorem{teiginys}[teorema]{teiginys}
+\newtheorem{algoritmas}[teorema]{algoritmas}
+\newtheorem{atvejis}[teorema]{atvejis}
+\newtheorem{salyga}[teorema]{sąlyga}
+\newtheorem{uzdavinys}[teorema]{uždavinys}
+\newtheorem{hipoteze}[teorema]{hipotezė}
+
+
+%% Numbered objects of "non-theorem" style (text roman):
+
+\theoremstyle{definition}
+\newtheorem{apibrezimas}[teorema]{apibrėžimas}
+\newtheorem{pastaba}[teorema]{pastaba}
+\newtheorem{pavyzdys}[teorema]{pavyzdys}
+
+%% An unnumbered remark and question:
+
+%\newtheorem*{xpastaba}{Pastaba}
+%\newtheorem*{xklausimas}{Klausimas}
+%% Equations numbered by section:
+
+%\numberwithin{equation}{section}
+
+
+\linespread{1.5} % space between the lines
+
+%%%% Put your macros here:
+
+
+\def\leq{\leqslant} \def\geq{\geqslant} \def\al{\alpha}
+\def\be{\beta} \def\ga{\gamma} \def\de{\delta} \def\C{\mathbb C}
+\def\F{\mathbb F} \def\N{\mathbb N} \def\R{\mathbb R}
+\def\Q{\mathbb Q} \def\Z{\mathbb Z} \def\eps{\varepsilon}
+\def\ro{\varrho}
+
+%Lietuviškos kabutės
+\newcommand{\lk}[1]{\glqq #1\grqq\,}
+
+\setcounter{chapter}{0}
+
+\begin{document}
+
+
+
+\tableofcontents
+\thispagestyle{empty}
+
+%\listoffigures
+%\thispagestyle{empty}
+%
+%\listoftables
+%\thispagestyle{empty}
+
+
+\setcounter{page}{2}
+
+\addcontentsline{toc}{section}{Kaip reikia spręsti uždavinius}
+%\section*{Įvadas}
+
+\newpage
+
+\chapter{Lygtys} 
+Lygtis - tai lygybė, kurioje siūloma rasti tokias nežinomųjų reikšmes, su kuriomis ji taptų teisinga. Šios reikšmės vadinamos lygties sprendiniais. Išspręsti lygtį reiškia rasti visus jos sprendinius.
+\subsection*{Kokius veiksmus leidžiama atlikti su lygtimi?} \label{sec: lygtys}
+\begin{itemize}
+\item Kiekvienoje lygties pusėje esančius reiškinius galima pertvarkyti (pavyzdžiui atskliausti ir sutraukti panašiuosius narius).
+\begin{align*}
+(x+2)(x+1) &=x(x+5) \\
+  x^2+3x+2 &=x^2+5x
+\end{align*}
+\item Prie abiejų lygties pusių galima pridėti arba iš jų atimti kokį nors skaičių. Jei norime pridėti arba atimti kokį nors lygtyje esantį narį, tai sakome, kad jį perkeliame į kitą lygties pusę. \textbf{Perkeliant narį keičiasi ženklas!}\label{sec:r2} 
+\begin{align*}
+\cancel{x^2}+3x+2 &=\cancel{x^2}+5x \\
+3x+2 &=5x \\
+ 3x-5x+2 &=0 \\
+3x-5x &=-2
+\end{align*}
+\item Abi lygties puses galime padauginti arba padalinti iš kokio nors \textbf{nelygaus 0} skaičiaus.
+\begin{align*}
+-2x &=-2 \\
+x &= 1
+\end{align*}
+\end{itemize}
+
+\subsection*{Kaip pradėti spręsti lygtį?}
+Remdamiesi šiais leistinais veiksmais kiekvieną lygtį, nepriklausomai nuo jos sudėtingumo, pradėsime spręsti nuo jos \textbf{sutvarkymo}.  Taikant bet kurį lygčių sprendimo metodą visada tikrinsime ar galima sutvarkyti lygtį vienu iš šių būdų:
+\begin{flalign*}
+\frac{3x-2x}{x-6} &=2 \cdot \frac{3}{x-6}, \fbox{$ x - 6 \neq 0$} && \parbox[t]{22.5em}{1. Jeigu lygtyje yra trupmena, tai abejas lygties puses dauginame iš jos vardiklio. Jei yra kelios trupmenos, dauginame iš jų vardiklių sandaugos. Gautas naujas trupmenas suprastiname. \textbf{Nurodome sąlygą: skaičiai, iš kurių dauginome, negali būti lygūs 0}} \\
+3x-2x &=2 \cdot 3 && \parbox[t]{22em}{2. Jeigu lygtyje yra nesutvarkytų sandaugų, jas sudauginame}\\
+3x-2x &=6  && \parbox[t]{22em}{3. Jeigu lygtyje yra panašiųjų narių, juos sudedame.}\\
+x &=6  && \parbox[t]{22em}{}\\
+\end{flalign*}
+\textbf{Lygties sprendimo pabaigoje nepamirštame patikrinti sąlygos}. Gavome sprendinį, kuris prieštarauja sąlygai, kad \fbox{$x - 6 \neq 0$}. Vadinasi, lygtis $\frac{3x-2x}{x-6} =2 \cdot \frac{3}{x-6}$ neturi sprendinių. Rašome $x \in \emptyset$.
+Šiame pavyzdyje neprireikė jokių kitų sprendimo metodų, tik lygties sutvarkymo. \textbf {Tik išmokus be klaidų sutvarkyti lygtį, galime nagrinėti tolimesnį lygčių kursą.}
+\subsection*{Išimtiniai atvejai}
+Lygtys, kuriose lygybė niekada negali galioti (pvz. -1=3) \textbf{sprendinių neturi}. 
+
+Lygtys, kuriose lygybė visada galioja (pvz. 6=6) \textbf{turi be galo daug sprendinių}. 
+\section{Tiesinės lygtys} 
+Tai lygtys, kurių išraiška yra $ax+b=0$
+
+ Norint sėkmingai spręsti tiesines lygtis, reikia išmokti veiksmų seką, kurią vykdant atsakymą gausime ne tik visada, bet ir greičiausiu būdu:
+\begin{itemize}
+\item Iš pradžių lygtį \textbf{sutvarkome}.
+\item \label{itm:tlyg4} Atskiriame vienanarius nuo paprastųjų skaičių ir sukeliame juos į skirtingas puses \textbf{nepamiršdami pakeisti jų ženklo}. Atlikus panašiųjų narių sutraukimą, vienoje lygties pusėje turime gauti vienanarį, o kitoje - paprastajį skaičių
+\item \label{itm:tlyg5} Padaliję abi lygties puses iš vienanario koeficiento, gauname nežinomojo reikšmę
+\item \label{itm:tlyg6} Patikriname, ar nežinomojo reikšmė atitinka \textbf{sąlygąs, leidžiančias atlikti pertvarkymus} 
+\item Jeigu abejojame, ar nepadarėme klaidų, patikriname, ar gautasis sprendinys tenkina pradinę lygtį 
+\end{itemize}
+\subsection*{Sprendimo pavyzdys 1}
+\begin{flalign*}
+ \frac{x-2}{3}+1 & =\frac{2x}{7} && \parbox[t]{22em}{ Įsitikiname, kad trupmenų vardiklių sandauga 21 nelygi 0, tada iš jos padauginame} \\
+ 21\cdot \Big(\frac{x-2}{3}+1\Big) &=21 \cdot \frac{2x}{7} \cdot 2x && \parbox[t]{22em}{Abi puses pertvarkome} \\
+ 7(x-2)+21 &=6x && \parbox[t]{22em}{} \\
+7x-14+21 &=6x && \parbox[t]{22em}{} \\
+7x+7 &=6x && \parbox[t]{22em}{vienanarius surenkame į kairę lygties pusę, o laisvuosius narius į dešinę pusę} \\
+7x-6x &=-7 && \parbox[t]{22em}{sutvarkome lygtį} \\
+x &=-7 && \parbox[t]{22em}{gavome atsakymą} \\
+\end{flalign*}
+
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+\subsection*{Sprendimo pavyzdys 2}
+
+$\frac{2}{x-3}+\frac{1}{x+3}=\frac{3}{x}$
+
+Dauginame abejas puses iš sandaugos $x(x-3)(x+3)$ ir nurodome sąlygas: \fbox{$x \neq 0$, $x-3 \neq 0$, $x+3 \neq 0$}.
+
+$\frac{2x}{\cancel{x-3}}\cdot (\cancel{x-3})(x+3)+\frac{1}{\cancel{x+3}} \cdot (x-3)\cancel{(x+3)} =\frac{3}{ \cancel{x}} \cdot \cancel{x}(x-3)(x+3)$
+
+Sutvarkome lygtį: atskliaudžiame dauginamuosius, sudedame panašiuosius narius
+
+$2x(x+3)+x(x-3) =3(x-3)(x+3)$
+
+$2x^2+6x+x^2-3x =3(x^2-9)$
+
+$\cancel{3x^2}+3x =\cancel{3x^2}-27$
+
+$3x=-27$
+
+Abi lygties puses dalijame iš 3.
+
+$x=-9$
+
+Patikriname, ar gauta reikšmė tenkina sąlygas:  \fbox{$x \neq 0$, $x-3 \neq 0$, $x+3 \neq 0$}. Įsitikiname, kad tenkina, vadinasi $-9$ yra vienintelis lygties $\frac{2}{x-3}+\frac{1}{x+3}=\frac{3}{x}$ sprendinys.
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+\section{Uždaviniai}
+\section{Atsakymai}
+\newpage
+
+\chapter{Lygčių sistemos}
+Lygčių sistemos sprendiniu vadinamas toks nežinomųjų rinkinys, su kuriuo kiekviena sistemos lygtis yra teisinga.
+\section{Dviejų tiesinių lygčių sistemos}
+Sprendžiamos keitimo arba sudėties/atimties būdu.
+\subsection*{Keitimo būdas}
+\begin{itemize}
+\item \label{itm:tsys1} Bet kurios lygties vieną nežinomąjį išreiškiame kitu. Stengiamės pasirinkti tą lygtį, iš kurios išreikšti lengviau.
+
+$\begin{cases}
+7x+4y=8 \\
+x-y=9  \hyperref[itm: tlyg2]{\Leftrightarrow } x=9+y
+\end{cases} $
+
+\item \label{itm:tlyg1} Gautą išraišką įrašome į kitą sistemos lygtį.
+
+$\begin{cases}
+7x+4y=8  \Leftrightarrow 7(9+y)+4y=8 \\
+x=9+y
+\end{cases} $
+
+\item Išsprendžiame gautą lygtį su vienu nežinomuoju.
+
+$\begin{cases}
+7(9+y)+4y=8 \hyperref[itm:tlyg2]{\Leftrightarrow }  63+7y+4y=8  \hyperref[itm:tlyg3]{\Leftrightarrow } 63+11y=8 \hyperref[itm:tlyg4]{\Leftrightarrow } 11y=-55  \hyperref[itm:tlyg4]{\Leftrightarrow} y=-5\\
+x=9+y
+\end{cases} $
+
+\item Apskaičiuojame atitinkamas kito nežinomojo reikšmes.
+
+$\begin{cases}
+y=-5\\
+x=9+(-5)=4
+\end{cases} $
+\item Jeigu abejojame, ar nepadarėme klaidų, patikriname, ar gautieji sprendiniai tenkina pradinę sistemą. 
+
+Gavome $(x,y)=(4,-5)$, įsitikiname, kad
+$\begin{cases}
+7\cdot(4)+4\cdot (-5)=8 \\
+4-(-5)=9 
+\end{cases} $
+\end{itemize}
+
+\section{Lygčių sistemos, kai viena lygtis netiesinė}
+Šio tipo sistemų sprendimas nuo ankstesnio tipo skiriasi tuo, kad sprendimo eigoje greičiausiai gausis kvadratinė lygtis, su kuria reikės susitvarkyti.
+\begin{itemize}
+\item Iš pradžių pasirenkame tiesinę lygtį, tada iš jos galime išreikšti kurį nors nežinomąjį
+
+$\begin{cases} x+y=3 \Leftrightarrow y=3-x \\ x^2-xy=-1 \end{cases}$
+\item Įrašę gautąją lygtį į kitą sistemos lygtį gausime netiesinę vieno nežinomojo lygtį
+
+$\begin{cases} y=3-x \\ x^2-x(3-x)=-1 \end{cases}$
+\item Šią lygtį išsprendžiame metodais, kuriuos esame išmokę
+
+$x^2-x(3-x)=-1 \Leftrightarrow x^2-3x+x^2=-1 \Leftrightarrow 2x^2-3x+1=0 \Leftrightarrow x_1=1, x_2=\frac{1}{2}$
+\item Kiekvienam gautam sprendiniui apskaičiuojame kito nežinomojo reikšmes
+
+Kai $x_1=1 \Rightarrow y_1=3-x_1=2$ ir $x_2=\frac{1}{2} \Rightarrow y_2=3-x_1=2\frac{1}{2}$
+\end{itemize}
+
+\chapter{Nelygybės}
+Leistinos nelygybių operacijos labai nedaug skiriasi nuo to, ką galima daryti su \hyperref[sec: lygtys]{lygtimis}. Yra tik du esminiai skirtumai.
+\begin{itemize}
+\item Jeigu abejas nelgybės puses daliname arba dauginame iš neigiamo skaičiaus, keičiasi nelygybės ženklas
+\item Jeigu dviejų daugiklių sandauga didesnė už nulį, tai jie yra vienodų ženklų, o jei mažesnė, tai skirtingų
+\end{itemize}
+\section{Tiesinės nelygybės}
+Peržvelgus skyrelio \hyperref[sec: lygtys]{Lygtys} sprendimą, galima pastebėti, kad paprastos tiesinės nelygybės sprendimo eiga analogiška, kaip ir tiesinės lygties
+
+$(x+2)(x+1) < x(x+5) $
+
+$ x^2+3x+2 < x^2+5x$
+
+$\cancel{x^2}+3x+2 < \cancel{x^2}+5x $
+
+$ 3x+2 < 5x $
+
+$ 3x-5x+2 < 0 $
+
+$ 3x-5x <-2 $
+
+$ -2x <-2 $
+
+\fbox{$x > 1$} Nepražiopsokite, kada pasikeičia nelygybės ženklas!
+
+\section{Kvadratinės nelygybės}
+
+\begin{itemize}
+\item Spręsdami kvadratinę nelygybę, kaip ir kvadratinės lygties atveju, perkeliame visus narius į vieną pusę, kad kitoje liktų $0$
+\item Gautas kvadratinis reiškinys laikomas neišskaidomu, jei jo diskriminantas mažesnis už $0$. Tokie reiškiniai visada įgyja tik vieną ženklą, kuris sutampa sutampa su vyriausiojo nario koeficiento ženklu. Šiais atvejais nelygybės sprendiniai yra $\emptyset$ arba $\R$.
+\item Kitais atvejais reiškinį stengiamės išskaidyti žinomais būdais.
+\item Jeigu skaidyti sudėtinga, pasinaudojame formule, kad reiškinio $ax^2+bx+c$ išskaidymas yra $a(x-x_1)(x-x_2)$, kur $x_1$ ir $x_2$ yra šio reiškinio šaknys.
+\item Tolimesnį uždavinį, jei nenurodyta kitaip, sprendžiame intervalų metodu (plačiau skyrelyje ,,Nelygybių sprendimo būdai").
+\end{itemize}
+
+\subsection*{Sprendimo pavyzdys 1}
+
+\begin{flalign*}
+ x^2+3x \leq 0 && \parbox[t]{25em}{Dešinėje pusėje turime $0$, todėl kairę pusę galime išskaidyti} \\
+ x(x+3) \leq 0 && \parbox[t]{25em}{Pasirinkę spręsti intervalų metodu, randame taškus, kuriuose reiškinys keičia ženklą} \\ 
+ x_1=0\text{ ir } x_2=-3 && \parbox[t]{25em}{Spręsdami intervalų metodu skaičių ašyje atidėsime šiuos taškus} \\
+\end{flalign*}
+\includegraphics[width=\textwidth]{"interval1".png}
+
+Į atsakymą rašome taškus, kuriuose reiškinys neteigiamas: \fbox{$x \in (-\infty, -3] \bigcup [-3,+\infty) $}
+\subsection*{Sprendimo pavyzdys 2}
+
+\begin{flalign*}
+ x^2-3x>-2 && \parbox[t]{22em}{ Pertvarkome, kad dešinėje pusėje gautume $0$} \\
+ x^2-3x+2 > 0 && \parbox[t]{22em}{Dešinėje pusėje turime $0$, todėl kairę pusę galime išskaidyti} \\ 
+ (x-1)(x-2) > 0 \text{ arba } x_2=3 && \parbox[t]{22em}{Naudodami formulę $ax^2+bx+c = a(x-x_1)(x-x_2)$ arba kitu būdu randame išskaidymą} \\
+x_1=1\text{ ir } x_2=2 && \parbox[t]{22em}{Nustatome taškus, kuriuose keičiasi reiškinio ženklas ir sprendžiame intervalų metodu} \\
+\end{flalign*}
+\includegraphics[width=\textwidth]{"interval2".png}
+
+Į atsakymą rašome taškus, kuriuose reiškinys neteigiamas: \fbox{$x \in (1,2) $}
+
+\subsection*{Sprendimo pavyzdys 3}
+\begin{flalign*}
+ x^2+4 < 3x && \parbox[t]{25em}{ Pertvarkome, kad dešinėje pusėje gautume $0$} \\
+ x^2-3x+4 < 0 && \parbox[t]{25em}{ Dešinėje pusėje turime $0$, todėl skaidysime kairę pusę} \\ 
+ 1<0 && \parbox[t]{25em}{Trinario diskriminantas yra neigiamas, todėl $x^2-3x+4$ ženklas sutaps su $x^2$ koeficiento ženklu} \\
+\end{flalign*}
+Gavome, kad realiųjų sprendinių nėra, rašome \fbox{$x \in \emptyset$}
+
+\section{Sudėtingesnės nelygybės}
+
+\subsection{Intervalų metodas}
+Šiame skyrelyje detaliai išnagrinėsime patį produktyviausią netiesinių nelygybių sprendimo metodą.
+
+Nelygybėse, kurios nesusiveda į tiesines, yra tikslinga visus narius perkelti į vieną pusę paliekant kitoje pusėje $0$. Jei nelygybėje yra trupmenų, jas bendravardiklinsime, tačiau vengsime daugybos iš vardiklių, jeigu jie nėra paprastieji skaičiai. Gautą daugianarį (o trupmenos atveju abu daugianarius skaitiklyje ir vardiklyje) sprendžiant intervalų metodu visada turi pavykti išskaidyti.
+
+\begin{itemize}
+\item Tuose taškuose, su kuriais bent vienas skaidinio daugiklis lygus $0$, keičiasi nelygybės ženklas
+\item Kažkuris tiesinis daugiklis gali pasitaikyti ir po kelis kartus, tada taške, kuriame daugiklis lygus $0$, nelygybės ženklas keičiasi tiek kartų, koks yra atitinkamo skaidinio laipsnis. 
+\item Esant neišskaidomų (kvadratinių) daugiklių, jų ženklas bus toks, koks ir jų vyriausiojo nario koeficiento.
+\end{itemize}
+
+Nustačius taškus, kuriuose nelygybės ženklas keičiasi,  galime taikyti intervalų metodą. Antrame pavyzdyje matysime, kodėl šį metodą galime taikyti taip pat ir trupmenoms.
+
+\subsection* {Pavyzdys 1}
+Turime reiškinį $x^4-x^3-x^2+x$ ir jo pilną išskaidymą $x(x-1)(x+1)^2$. Spręsime nelygybę  $x(x-1)(x+1)^2 >0$.
+
+Lygties $x(x-1)(x+1)^2 = 0$ sprendiniai tenkins lygtis $x=0$, $x-1=0$ ir $x+1=0$. Iš antros ir trečios lygčių gausime $x=1$ ir $x=-1$.
+
+Gavome, kad nelygybės atveju taškuose $-1$, $0$ ir $1$ keisis reiškinio ženklas. Taške $-1$ ženklas keisis du kartus, nes daugiklio $x+1$ laipsnis yra $2$, vadinasi išliks toks pats. Realiųjų skaičių ašyje pažymėkime šiuos taškus:
+
+\includegraphics[width=\textwidth]{"empty interval".png}
+
+Pasirinkime bet kurį tašką, nepakliūvantį tarp pažymėtų, ir apskaičiuokime reiškinio reikšmę tame taške. Pavyzdžiui, kai $x=2$, tai $x(x-1)(x+1)^2=18$. Vadinasi, kai $x \in (1, +\infty)$, reiškinys yra teigiamas. Pažymime gautą rezultatą ašyje:
+
+\includegraphics[width=\textwidth]{"half-empty interval".png}
+Toliau pereiname prie likusių nepažymėtų intervalų:
+\begin{itemize}
+\item Kai $x \in (0, 1)$, tai $x$ ženklas bus minusas, nes taškas $1$ keičia ženklą
+\item Kai $x \in (-1, 0)$, tai $x$ ženklas bus pliusas, nes taškas $0$ keičia ženklą
+\item Kai $x \in (-\infty, -1)$, tai $x$ ženklas bus pliusas, nes taškas $-1$ keičia ženklą \textbf{du kartus}
+\end{itemize} 
+
+\includegraphics[width=\textwidth]{"full interval".png}
+
+Pagal gautą brėžinį užrašome uždavinio atsakymą: \fbox{$x \in (-\infty, -1) \bigcup (-1,0) \bigcup (1,+\infty)$}
+\subsection* {Pavyzdys 2}
+$\frac{x}{(x-1)(x+1)^2}>0$
+
+Galima pastebėti, kad $\frac{1}{(x-1)(x+1)^2}$ įgyja tokį patį ženklą, kaip ir $(x-1)(x+1)^2$. Šį pastebėjimą reikia įsiminti, nes juo remsimės kituose uždaviniuose. \textbf{Būtinai įtraukiame sąlygą} \fbox{$x \neq 1 \text{ ir } x \neq -1$}. Remiantis pastebėjimu, gausime tą patį sprendimą, kaip ir ankstesniame uždavinyje:
+
+\includegraphics[width=\textwidth]{"full interval".png}
+
+\textbf{Įsitikiname, kad taškai brėžinyje į sprendinius nepakliūva, t.y. taškai $-1$ ir $1$ yra tušti.} Atsakymas toks pats, kaip praėjusiame uždavinyje.
+
+\section {Užduotys}
+\begin{itemize}
+\item $(x+4)(x+1)(x-6)>0$
+\item $(x+2.7)(x-2.3)(x-7)>0$
+\item $(x-1)^2(x+1)(x-3)<0$
+\item $\frac{x+3}{x-1}>0$
+\item $\frac{x+7}{3+x}>0$
+\item ir panašius, kurie yra vadovėlyje 95 - 96 psl.
+\end{itemize} Taip pat spręsime sudėtingesnius uždavinius iš mano didelės kolekcijos:
+
+\includegraphics{"kolekcija".png}
+
+\section{Grafinis nelygybių sprendimo metodas}
+
+Nelygybėms $A>B$ ir $A \geq B$, kur $A$ ir $B$ yra tam tikri reiškiniai (gali būti ir konstantos) braižysime tuos reiškinius atitinkančius grafikus ir tikrinsime, kuriame nežinomojo reikšmių intervale reiškinio $A$ grafikas yra virš reiškinio $B$ grafiko. 
+\begin{figure}[!htb]
+	\begin{minipage}{0.49\textwidth}
+		\frame{\includegraphics[width=\linewidth]{"Grafikas1".png}}
+		\captionsetup{labelformat=empty}
+		\caption{\fbox{ $x^2>\frac{x}{2}-2$}}
+		Atsakymas: $x \in (-2,3)$
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\frame{\includegraphics[width=\linewidth]{"Grafikas2".png}}
+		\captionsetup{labelformat=empty}
+		\caption{\fbox{ $x^2<x+6$}}
+		Atsakymas: $x \in \emptyset$
+	\end{minipage}
+\end{figure}
+
+
+\section{Nelygybių sistemos}
+
+Iš pradžių prisiminsime, kaip reikia spręsti paprastąsias nelygybių sistemas su vienu nežinomuoju:
+\subsection{Pavyzdys 1}$\begin{cases} x^2-x+20>0 \\ 6-5x>1 \end{cases}$
+
+Pritaikę žinias iš skyrelių "Nelygybių sprendimas intervalų metodu" ir "Tiesinės nelygybės" sprendžiame kiekvieną nelygybę atskirai. Pirmą nelygybę išsprendę intervalų metodu nustatome, kad pirmosios nelygybės sprendinys
+bus $x \in (\infty,-4)$ $ \bigcup (5, +\infty)$, o antroje nelygybėje gauname $x < 1$, t.y. $x \in ( -\infty, 1)$. Skaičių tiesės viršuje užspalviname vieną intervalą, apačioje užspalviname antrą intervalą ir nustatome intervalą, kuriame abi sritys užspalvintos. Gauname,
+kad bendras intervalas yra \mbox{$x \in (\infty,-4)$}. Sutrumpinta sprendimo eiga tokia:
+
+$\begin{cases} x^2-x+20>0 \\ 6-5x>1 \end{cases} \Leftrightarrow \begin{cases} \in (\infty,-4) \bigcup (5, +\infty) \\ x \in ( -\infty, 1) \end{cases} \Leftrightarrow x \in (\infty,-4)$
+
+Nelygybių sistemose su dviem kintamaisiais abejose nelygybėse reikės išsireikšti kažkurį vieną (tą patį) kintamąjį ir nubraižius gautų išraiškų grafikus įvertinti sprendinius.
+
+\section{Kartojam visą skyrių}
+
+Priminimas: visose lygtyse ir nelygybėse pirmiausiai reikia patikrinti apibrėžimo sritį.
+\begin{enumerate}
+\item Rasime:
+
+Parabolės $y=x^2+ax+b=0$ lygtį, kai jos viršūnė yra taške $(2, 2)$
+
+Parabolės $y=-x^2+ax+b=0$ lygtį, kai jos viršūnė yra taške $(2, 2)$
+
+Tiesės $y=ax+b=0$ lygtį, kai ji eina per taškus $(0, 2)$ ir $(-2,0)$
+
+Tiesės $y=ax+b=0$ lygtį, kai ji eina per taškus $(0, 2)$ ir $(4, 4)$
+
+Tiesės $y=ax+b=0$ lygtį, kai ji eina per taškus $(1, 2)$ ir $(4, 4)$
+
+Tiesės $y=ax+b=0$ lygtį, kai ji eina per taškus $(0, 2)$ ir $(1, 2)$
+
+\item Išskirsime pilnuosius kvadratus iš reiškinių $x^2-2x-15$, $x^2-2x+15$, $x^2+10x+25$, $x^2+8x-9$, $x^2+8x$, $x^2-9$
+
+\item Išspręsime nelygybes grafiniu būdu.
+
+$x^2 \geq 5x-6$
+
+$2x^2 < x-6$
+
+$\frac{x^2}{2} \geq -x-5$
+
+$\frac{1}{x}+2 \geq -x$
+
+$|x+2|>-x$
+
+$|x|>x^2$
+
+$\sqrt{x}>x^2$
+
+$\sqrt{x}+\sqrt{x-3} \leq 3$
+
+\item Tas pačias nelygybes išspręsime intervalų metodu.
+
+\item Išspręsime lygtį $\sqrt{x}+\sqrt{x+5} = \sqrt{x+21}$
+
+\item Išspręsime valstybinio egzamino lygio uždavinį.
+
+$\frac{\sqrt {(2x+3)(4x-5)}}{x-1}>\frac{\sqrt{13}}{x-1}$
+
+\end{enumerate}
+\end{document}
+                                                      

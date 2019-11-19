@@ -1,0 +1,191 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[L7x]{fontenc}
+\usepackage[lithuanian]{babel}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{animate}
+\usepackage{verbatim}
+\usepackage{pgfplots}
+\usepackage{hyperref}
+\usepackage{empheq}
+\usepackage[many]{tcolorbox}
+\usepackage{mdframed}
+\usepackage{framed}
+\usepackage{indentfirst}
+\usetikzlibrary{arrows} %geogebra
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm, footskip=1cm, a4paper]{geometry}
+
+\usepackage{tasks}
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\tit}[1]{\textit{#1}}
+
+\begin{document}
+\section{Vektoriai}
+\subsection{Ankstesnės temos}
+Prieš mokydamiesi šią temą, įsitikinkite, kad turite pakankamai žinių iš ankstesnių geometrinių temų. Pabandykite šiuos uždavinius:
+\begin{enumerate}
+
+\begin{minipage}[b]{0.6\linewidth}
+\item Stačiojo trikampio įžambinės galų koordinatės yra (1; 2) ir (3; 5).
+Remdamiesi brėžiniu nustatykite trečiosios trikampio viršūnės koordinates (a; b).
+\tbf{\tit{VBE 2011, 2užd. (1tšk)}}
+\end{minipage}
+\hspace{\fill} \begin{minipage}{0.23\linewidth} \includegraphics[width=\textwidth]{"vbe2011_2".png}\end{minipage}
+\item Įrodykite, kad trikampyje, turinčiame kampus $(90^o, 30^o, 60^o)$, kraštinės visada sutinka santykiu $1:2:\frac{\sqrt{3}}{2}$
+\item Įrodykite, kad trikampyje, turinčiame kampus $(90^o,X^o, (90-X)^o)$, kraštinės visada sutinka santykiu $(1, \sin (X^o), \cos (X^o))$
+\end{enumerate}
+\subsection{Ilgis ir kampas atskirai (apžvalga, ką jau turime mokėti)}
+Ankstesnėse temose jums yra tekę pasinaudojant įvairiomis savybėmis ir teoremomis susieti atkarpų ilgius ir kampus. Iš pat pradžių uždaviniams išspręsti užtekdavo šių taisyklių:
+\begin{itemize} 
+\item Pitagoro teoremos, kuri parodo sąryšį tarp trijų kraštinių, kai žinome, kad kampas tarp kažkurių dviejų lygus $90^o$.
+\item Lygiašonio trikampio savybe, kad 2 lygios kraštinės jame bus tada ir tik tada, kai bus 2 lygūs kampai. 
+\end {itemize}
+Vėliau būdavo galima išvesti dar vieną taisyklę:
+\begin{itemize} 
+\item Trikampių, turinčių kampus $(90^o, 30^o, 60^o)$, kraštinės visada sutinka santykiu $1:2:\frac{\sqrt{3}}{2}$, tačiau ši taisyklė tėra tik ankstesnių dviejų savybių hibridas, nes šį teiginį galima įrodyti tada ir tik tada, kai taikome Pitagoro teoremą ir pastebime, kad trikampis su kampais $(90^o, 30^o, 60^o)$ yra lygiakraščio trikampio pusė.
+\end{itemize}
+Dar vėliau domėjomės, kokias kraštinių proporcijas išlaiko šįkart jau bet kurie trikampiai su kampais $(90^o,X^o, (90-X)^o)$ ir radome atsakymą:
+\begin{itemize}
+\item Trikampio su kampais $(90^o,X^o, (90-X)^o)$ kraštinės sutinka santykiu $(1, \sin (X^o), \cos (X^o))$. 
+\end{itemize}
+Kai jau pakankamai susipažinome, kokie yra sąryšiai tarp atkarpų ilgių ir kampų, metas patyrinėti geometrinius objektus, kuriems aprašyti reikia ir ilgio, ir kampo kartu.
+\subsection{Ilgis ir kampas viename. Kas yra vektorius ir kam jį panaudoti?}
+
+\begin{empheq}[box=\tcbhighmath]{align*}
+\text{\tbf{Geometrinė interpretacija}}
+\end{empheq}
+
+\tbf{Vektorius yra geometrinis objektas, turintis kryptį ir ilgį.} Jis visada gali būti vaizduojamas kaip rodyklė.
+
+\begin{empheq}[box=\tcbhighmath]{align*}
+\text{\tbf{Algebrinė interpretacija}}
+\end{empheq}
+
+\tbf{Vektorius} (\tit{lot. vector - vežikas}) \tbf{apibrėžia, kokiomis koordinatėmis reikia paslinkti tašką $A$, kad jis patektų į tašką $B$}. Vadinasi, jis gali būti aprašomas ir kaip koordinačių seka. Pvz. $(x, y)$ yra plokštumos vektorius, o $(x,y,z)$ yra trimatės erdvės vektorius.\par
+Vadinasi, vektoriai gali būti panaudoti spręsti geometriniams uždaviniams, kuriuose yra patogiau naudoti koordinates, nei tik kampus ir atkarpas. Toliau mokysimės, kaip įvairias operacijas su vektoriais aprašyti algebriškai, t.y. naudojant koordinačių sekas.
+
+\subsection{Vektorių operacijos}
+
+Veiksmai, kuriuos galima atlikti su vektoriais (\tbf{juos privaloma mokėti egzaminui}):
+\begin{mdframed}[backgroundcolor=yellow!50!white]
+\begin{itemize}
+\item Apskaičiuoti vektoriaus $\overrightarrow{x}$ ilgį $|\overrightarrow{x}|$. 
+\item Apkeisti vektoriaus $\overrightarrow{x}$ kryptį padauginę jo koordinates iš -1.
+\item Padauginti vektorių $\overrightarrow{x}$ iš skaliaro $k$ (bet kurio nenulinio realiojo skaičiaus) ir gauti naują $k$ kartų ilgesnį vektorių $k\overrightarrow{x}$, išlaikantį tą pačią kryptį, jei $k>0$ ir priešingos krypties, jei $k<0$
+\item Sudėti du vektorius $\overrightarrow{x}$ ir $\overrightarrow{y}$ ir gauti naują vektorių $\overrightarrow{x} + \overrightarrow{y}$, kurio ilgis ir kryptis sutampa su lygiagretainio, kurio kraštinės yra vektoriuose $\overrightarrow{x}$ ir $\overrightarrow{y}$, įstrižaine.
+\item Atimti du vektorius $\overrightarrow{x}$ ir $\overrightarrow{y}$ ir gauti naują vektorių, lygų vektorių $\overrightarrow{x}$ ir $-\overrightarrow{y}$ sumai.
+\item Sudauginti du vektorius  $\overrightarrow{x}$ ir $\overrightarrow{y}$ skaliariškai ir gauti jų skaliarinę sandaugą $\overrightarrow{x} \cdot \overrightarrow{y}$.
+\item Patikrinti, ar du vektoriai $\overrightarrow{x}$ ir $\overrightarrow{y}$ statmeni: jie statmeni tada ir tik tada, kai $\overrightarrow{x} \cdot \overrightarrow{y}=0$
+\item Patikrinti, ar du vektoriai $\overrightarrow{x} \cdot \overrightarrow{y}$ kolinearūs (\tit{angl. co - bendras, line - tiesė}), t.y. ar jie gali būti pavaizduoti vienoje tiesėje: tai įmanoma tada ir tik tada, jeigu egzistuoja skaliaras (nenulinis) $k$, kad $\overrightarrow{x}= k\cdot \overrightarrow{y}$
+\end{itemize}
+\end{mdframed}
+\subsection{Uždaviniai, kurie padės susieti geometrinę ir algebrinę interpretacijas}
+
+\begin{enumerate}
+\item Koordinačių plokštumoje pažymėkite bet kuriuos du taškus $A(x_1,y_1)$ ir $B(x_2, y_2)$. Nubrėžkite rodyklę iš taško $A$ į tašką $B$, kuri atitinka vektorių $\overrightarrow{AB}$. Remkitės \fbox{algebrine vektoriaus interpretacija} ir grafiškai parodykite, kad $\overrightarrow{AB}=(x_2-x_1, y_2-y_1)$.
+\item Kodėl vektoriaus $(x,y)$ ilgis lygus $\sqrt{x^2+y^2}$? Į šį klausimą galite atsakyti koordinačių plokštumoje pažymėję taškus $A(0,0)$ ir $B(x, y)$ ir parodydami, kad vektoriaus $\overrightarrow{AB}$ ilgis lygus $\sqrt{x^2+y^2}$
+\item Koordinačių plokštumoje pažymėkite taškus $A(0,0)$, $B(x, y)$, $C(kx, ky)$. $\overrightarrow{AB}$. Įsitikinkite, kad $k\cdot \overrightarrow{AB}=\overrightarrow{AC}$
+\item Įsitikinkite, kad bet kuriam trikampiui $ABC$, esančiam ant koordinačių plokštumos, galioja: 
+\begin{enumerate}
+\item $\overrightarrow{AB}+\overrightarrow{BC}=\overrightarrow{AC}$
+\item $\overrightarrow{AB}+\overrightarrow{BC}+\overrightarrow{CA}=(0, 0)$
+\end{enumerate}
+\item Koordinačių plokštumoje pažymėkite du vektorius $\overrightarrow{AB}=(x_1, y_1)$ ir $\overrightarrow{BC}=(x_2, y_2)$, taip, kad $\overrightarrow{AB}$ galas sutaptų su $\overrightarrow{BC}$ pradžia ir įsitikinkite, kad vektorių $(x_1, y_1)$ ir $(x_2, y_2)$ suma lygi $(x_1+x_2, y_1+y_2)$
+\item Duota, kad kampas tarp vektorių $\overrightarrow{AB}$ ir $\overrightarrow{BC}$ yra lygus $67^o$. Kam lygus kampas tarp vektorių $\overrightarrow{AB}$ ir $-\overrightarrow{BC}$?
+\item Vektorių $\overrightarrow{u}=(x_1, y_1)$ ir $\overrightarrow{v}=(x_2, y_2)$ skaliarinė sandauga $\overrightarrow{u}\cdot \overrightarrow{v}$ visuomet lygi $x_1y_1+x_2y_2$. Įrodykite, kad kiekvienam dvimačiui vektoriui $\overrightarrow{a}=(x, y)$ visuomet galioja $|\overrightarrow{a}|^2=\overrightarrow{a}\cdot \overrightarrow{a}$. Ar ši tapatybė teisinga trimačiams vektoriams?
+\end{enumerate}
+%\item Išsiaiškinsime dviejų vektorių $\overrightarrow{u}=(x_1, y_1)$ ir $\overrightarrow{v}=(x_2, y_2)$ skaliarinės %sandaugos $\overrightarrow{u} \cdot \overrightarrow{v} = (x_1x_2, y_1y_2)$ geometrinę prasmę
+\subsection{Pora tapatybių, kurias reikia mokėti egzaminui}
+
+Egzaminų lape pateikiami du skaliarinės sandaugos apibrėžimai (tai yra viskas, ką pateikia iš vektorių temos):
+\begin{framed}
+\noindent\includegraphics[width=\textwidth]{"egz_vektoriai".png}
+\end{framed}
+
+Jais pasinaudojus galima gauti, kad kampas $\alpha$, kurį sudaro vektoriai $\overrightarrow{u}=(x_1,y_1,z_1)$ ir $\overrightarrow{v}=(x_2,y_2,z_2)$ tenkina
+
+\begin{empheq}[box=\tcbhighmath]{align*}
+\cos \alpha = \frac{\overrightarrow{u}\cdot \overrightarrow{v}}{|\overrightarrow{u}|\cdot |\overrightarrow{v}|}
+\end{empheq}
+
+Kitaip tariant, to kampo kosinusas lygus vektorių $\overrightarrow{u}$ ir $\overrightarrow{v}$ ilgių sandaugai, padalintai iš skaliarinės sandaugos. Ar sugebėtumėte rasti kampą tarp vektorių $\overrightarrow{u}=(1,0,1)$ ir $\overrightarrow{v}=(1,1,1)$?
+
+Lieka neaišku, kodėl skaliarinę sandaugą galima aprašyti dviem būdais. Pasirodo, tai yra kosinusų teoremos išvada. Įrodymą galite išsinagrinėti \href{http://clas.sa.ucsb.edu/staff/alex/DotProductDerivation.pdf}{šioje nuorodoje}
+
+Dar viena tapatybė, kuri pasitaiko egzaminuose:
+\begin{empheq}[box=\tcbhighmath]{align*}
+|\overrightarrow{a}|^2=\overrightarrow{a}\cdot \overrightarrow{a}
+\end{empheq}
+\subsection{Ruošiamės egzaminui}
+\begin{enumerate}
+%\item \tbf{\tit{VBE 2008, 17užd. (3tšk)}}\\
+\item \tbf{\tit{VBE 2009, 2užd. (1tšk)}}\\
+Jei lygiakraščio trikampio $ABC$ kraštinės ilgis lygus 4, tai kam lygi skaliarinė sandauga $\overrightarrow{BA}\cdot \overrightarrow{BC}$?
+\item \tbf{\tit{VBE 2010, 19užd. (1tšk,2tšk,2tšk)}}\\
+\begin{minipage}[b]{0.6\linewidth}
+Koordinačių plokštumoje duoti trys taškai $A(3;6)$, $B(6; 12)$ ir $C(13;1)$.
+\begin{enumerate}
+\item Užrašykite vektoriaus $\overrightarrow{AB}$ koordinates.
+\item Ar vektoriai $\overrightarrow{AB}$ ir $\overrightarrow{AC}$ statmeni?
+\item Toje pačioje koordinačių plokštumoje pasirinktas taškas $D$, kad keturkampis $ABCD$ būtų lygiagretainis. Nustatykite taško $D$ koordinates.
+\end{enumerate}
+\end{minipage}
+\hspace{\fill}
+\definecolor{uuuuuu}{rgb}{0.26666666666666666,0.26666666666666666,0.26666666666666666}
+\definecolor{qqqqff}{rgb}{0.,0.,1.}
+\definecolor{cqcqcq}{rgb}{0.7529411764705882,0.7529411764705882,0.7529411764705882}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm, scale=0.3]
+\draw [color=cqcqcq,, xstep=2.0cm,ystep=2.0cm] (-0.595,-0.6075) grid (16.945,12.5325);
+\draw[->,color=black] (-0.595,0.) -- (16.945,0.);
+\foreach \x in {2,4,6,8,10,12,14,16}
+\draw[shift={(\x,0)},color=black] (0pt,2pt) -- (0pt,-2pt) node[below] {\footnotesize $\x$};
+\draw[->,color=black] (0.,-0.6075) -- (0.,12.9325);
+\foreach \y in {2,4,6,8,10,12}
+\draw[shift={(0,\y)},color=black] (2pt,0pt) -- (-2pt,0pt) node[left] {\footnotesize $\y$};
+\draw[color=black] (0pt,-10pt) node[right] {\footnotesize $0$};
+\clip(-0.595,-0.6075) rectangle (16.945,12.9325);
+\draw (13.,1.)-- (16.,7.);
+\draw (16.,7.)-- (6.,12.);
+\draw [->] (3.,6.) -- (6.,12.);
+\draw [->] (3.,6.) -- (13.,1.);
+\draw [fill=qqqqff] (3.,6.) circle (2.5pt);
+\draw[color=qqqqff] (3.215,6.5475) node {$A$};
+\draw [fill=qqqqff] (6.,12.) circle (2.5pt);
+\draw[color=qqqqff] (6.215,12.4275) node {$B$};
+\draw [fill=qqqqff] (13.,1.) circle (2.5pt);
+\draw[color=qqqqff] (13.205,1.5675) node {$C$};
+\draw [fill=uuuuuu] (16.,7.) circle (1.5pt);
+\draw[color=uuuuuu] (16.175,7.4475) node {$D$};
+\end{tikzpicture}
+\item  \tbf{\tit{VBE 2012, 24užd. (2tšk)}}\\
+Su kuria $x$ reikšme vektoriai $\overrightarrow{c}=(x-5)\overrightarrow{i}+\overrightarrow{j}$ ir $\overrightarrow{c}=(2x-1)\overrightarrow{i}-\overrightarrow{j}$ yra kolinearūs? ($\overrightarrow{i}$ ir $\overrightarrow{j}$ yra vienetiniai vektoriai koordinačių ašyje, lygūs $(1,0)$ ir $(0, 1)$)
+\item  \tbf{\tit{VBE 2013, 20užd. (2tšk)}}\\
+Vektoriai $\overrightarrow{a}-2\overrightarrow{b}$ ir $\overrightarrow{a}+2\overrightarrow{b}$ statmeni, $|\overrightarrow{a}|=5$. Raskite $|\overrightarrow{b}|$.
+\item  \tbf{\tit{VBE 2014, 16užd. (2tšk)}}\\
+Duoti taškai $A(-1; -2; 4), B(-4; -2; 0), C(3; -2;1)$. Apskaičiuokite kampo tarp vektorių $\overrightarrow{BA}$ ir $\overrightarrow{BC}$ didumą.
+\item \tbf{\tit{VBE 2014, 28užd. (4tšk)}}\\
+\begin{minipage}[c]{0.5\linewidth}
+Taškai $K$ ir $M$ yra lygiagretainio $ABCD$ kraštinių $BC$ ir $CD$ vidurio taškai. Vektorių
+$\overrightarrow{AD}$ išreikškite vektoriais $\overrightarrow{AM}=\overrightarrow{a}$ ir $\overrightarrow{AK}= \overrightarrow{b}$.
+\end{minipage}
+\hspace{\fill} \begin{minipage}{0.4\linewidth} \includegraphics[width=\textwidth]{"vbe2014_28".png}\end{minipage}
+\begin{minipage}[b]{0.7\linewidth}
+\item  \tbf{\tit{VBE 2014band, 17užd. (2tšk)}}\\
+Raskite vektoriaus $\overrightarrow{c}$ ilgį, jei $\overrightarrow{c}=2\overrightarrow{a}-3\overrightarrow{b}$ ir $\overrightarrow{a}=(0; 0,5)$, $\overrightarrow{b}=(-2; 3)$.
+\item  \tbf{\tit{VBE 2015band, 16užd. (2tšk, 2tšk)}}\\
+Keturkampis $ABCD$ yra rombas. 
+\begin{enumerate}
+\item Užrašykite vektorių, lygų vektorių sumai $\overrightarrow{AB}+\overrightarrow{AD}$.
+\item Apskaičiuokite vektorių skaliarinę sandaugą $\overrightarrow{BD}\cdot \overrightarrow{AC}$
+\end{enumerate}
+\end{minipage}
+\hspace{\fill} \begin{minipage}{0.15\linewidth} \includegraphics[width=\textwidth]{"vbe2015_16".png}\end{minipage}
+\item \tbf{\tit{VBE 2015, 7užd. (2tšk)}}\\
+Su kuria $x$ reikšme vektoriai $\overrightarrow{a}=(x; 3)\text{ ir }b=(-2; 6)$ yra kolinearūs?
+\end{enumerate}
+\end{document}

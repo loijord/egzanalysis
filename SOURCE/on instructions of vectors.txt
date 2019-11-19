@@ -1,0 +1,9 @@
+\begin{itemize}
+\item Įsitikinimui, kad pasiūlyta algebrinė (naudojanti koordinates) interpretacija siejasi su geometrine moksleivė naudoja empirinį metodą: pabando konkrečias reikšmes ir įsitikina teisingumu. Tokia interpretacija tik iš dalies įprasmina reikiamą įsiminti medžiagą, be to nėra griežta.
+\item Antrame uždavinyje moksleivė pažymėjo du konkrečius taškus, apskaičiavo vektoriaus tarp jų koordinates ir pritaikė Pitagoro t. Tyrime atsispindėjo dedukciškumas.
+\item Matymas, jog vienas vektorius už kitą ilgesnis $k$ kartų yra tik intuityvus. Reikėjo naudoti trikampių panašumą.
+\item (a) Prasminis paaiškinimas pagal algebrinę interpretaciją per sudėtingas. Galbūt per sudėtinga ir jos supaprastinta versija su poslinkiu tarp 3 miestų. Reikėtų užuominos, kad remiamės alg. interpretacija. (b) Panaudotas toks pats brėžinys kaip ir ankstesniame; susipainiojo, kodėl $\overrightarrow{CA}$ nėra rodyklė iš $A$ į $C$. 
+\item Problema vėl empiriškumas.
+\item Bando neteisingai uždėti kampą tarp $\overrightarrow{AB}$ ir $\overrightarrow{BC}$. Trūksta žinių, jog antrasis vektorius gali būti paslinktas, kad sutaptų su $\overrightarrow{AB}$ pradžia. Reikėtų užuominos, kad remiamės geom. interpretacija.
+\item Nepavyko ne tik įrodymas, bet ir nusakyti, kuo skiriasi $\overrightarrow{a}\cdot \overrightarrow{b}$ nuo $|\overrightarrow{a}|\cdot |\overrightarrow{b}|$
+\end{itemize}

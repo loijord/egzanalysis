@@ -1,0 +1,1 @@
+look for other illustration of math things same as derivatives illuminati
