@@ -13,6 +13,7 @@ class FunctionPlotter:
         self.step = step
         self.input = ''
         self.points = []
+        self.lines = []
 
     def display(self):
         title = str(self.expression)
@@ -49,6 +50,10 @@ class FunctionPlotter:
             self.input = ''
         elif key == 'up':
             self.sketch(fig, ax)
+        elif key == 'down':
+            self.remove_line(fig)
+        elif key == 'ctrl+up':
+            self.sketch(fig, ax)
         else:
             self.input += key
 
@@ -62,8 +67,22 @@ class FunctionPlotter:
 
             arguments = np.arange(min(x)-self.step, max(x)+self.step, self.step/100)
             values = f(arguments)
-            ax.plot(arguments, values)
+            line = ax.plot(arguments, values)[0]
+            self.lines.append(line)
             fig.canvas.draw()
+
+    def remove_line(self, fig):
+        if len(self.lines) > 0:
+            self.lines[-1].set_visible(False)
+            del self.lines[-1]
+            fig.canvas.draw()
+
+    def plot(self, fig, ax):
+        arguments = np.arange(*self.xlim, step=self.step/100)
+        values = self.function(arguments)
+
+        ax.plot(arguments, values)
+        fig.canvas.draw()
 
 
 functionplotter = FunctionPlotter('sin(x)', xlim = (-10,10), ylim = (-10,10), step=1)
