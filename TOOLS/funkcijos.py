@@ -1,22 +1,31 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import sympy as sp
+import re
 from scipy.interpolate import interp1d
 
 class FunctionPlotter:
-    def __init__(self, expression, xlim = (-10,10), ylim = (-10,10), step=1):
+    def __init__(self, expression, xlim = (-10,10), ylim = (-10,10), step=1, shooting_const=0.5):
         x = sp.symbols('x')
         self.expression = expression
-        self.function = sp.lambdify(x, self.expression, "math")
-        self.xlim = xlim
-        self.ylim = ylim
-        self.step = step
-        self.input = ''
+        self.function = sp.lambdify(x, self.expression, "numpy") #pythonic function coverted from symbolic expression
+        self.xlim = xlim  #x limits of figure
+        self.ylim = ylim  #y limits of figure
+        self.step = step  #scaling of coordinates
+        self.user_input = '' #input that is typed by keyboard until 'enter' hit
+        self.coordinates = [] #numerical points
+        self.coordinates_asarray = None
+        self.sketches = []
+        self.graph = None
         self.points = []
-        self.lines = []
+        self.shooting_const = shooting_const
+        self.target = None
+        self.shooting_direction = None
+        self.shoots = 0
+
 
     def display(self):
-        title = str(self.expression)
+        title = 'FUNKCIJA f(x) =' + str(self.expression)
         fig = plt.figure(title)
         ax = fig.gca()
 
@@ -38,53 +47,100 @@ class FunctionPlotter:
 
     def refresh_plot(self, fig, ax, key):
         if key == 'enter':
-            try:
-                argument = float(self.input.replace(',', '.'))
-                format_is_right = True
-            except ValueError('not a float'):
-                format_is_right = False
-            if format_is_right:
-                self.points.append([argument, self.function(argument)])
-                ax.scatter(*self.points[-1], color='blue')
-                fig.canvas.draw()
-            self.input = ''
+            inp = self.user_input.replace(',', '.')
+            if re.match(r'^-?\d+(?:\.\d+)?$', inp) is not None:
+                argument = float(inp)
+                self.add_point(fig, ax, argument)
+            else:
+                print(inp, 'is not a number')
+            self.user_input = ''
         elif key == 'up':
             self.sketch(fig, ax)
         elif key == 'down':
-            self.remove_line(fig)
+            self.remove_sketch(fig)
         elif key == 'ctrl+up':
-            self.sketch(fig, ax)
+            self.plot(fig, ax)
+        elif key == 'ctrl+down':
+            self.remove_plot(fig)
+        elif key == 'left':
+            self.remove_point(fig)
+        elif key == 'right':
+            self.shoot_the_moon(fig, ax)
         else:
-            self.input += key
+            self.user_input += key
+
+        if key != 'right':
+            self.shoots = 0
 
     def sketch(self, fig, ax):
-        #connects points choosen to interpolate
-        if len(self.points) > 1:
-            x, y = np.array(self.points).T
-            if len(self.points) > 3: f = interp1d(x, y, kind='cubic', fill_value="extrapolate")
-            elif len(self.points) > 2: f = interp1d(x, y, kind='quadratic', fill_value="extrapolate")
-            elif len(self.points) > 1: f = interp1d(x, y, kind='linear', fill_value="extrapolate")
+        if self.coordinates_asarray is not None and self.coordinates_asarray.shape[1] > 1:
+            order = np.argsort(self.coordinates_asarray[0])
+            x, y = self.coordinates_asarray[:, order]
+            if self.coordinates_asarray.shape[1] > 3: f = interp1d(x, y, kind='cubic', fill_value="extrapolate")
+            elif self.coordinates_asarray.shape[1] > 2: f = interp1d(x, y, kind='quadratic', fill_value="extrapolate")
+            else: f = interp1d(x, y, kind='linear', fill_value="extrapolate")
 
             arguments = np.arange(min(x)-self.step, max(x)+self.step, self.step/100)
             values = f(arguments)
-            line = ax.plot(arguments, values)[0]
-            self.lines.append(line)
-            fig.canvas.draw()
-
-    def remove_line(self, fig):
-        if len(self.lines) > 0:
-            self.lines[-1].set_visible(False)
-            del self.lines[-1]
+            sketch = ax.plot(arguments, values)[0]
+            self.sketches.append(sketch)
             fig.canvas.draw()
 
     def plot(self, fig, ax):
-        arguments = np.arange(*self.xlim, step=self.step/100)
-        values = self.function(arguments)
+        if self.graph is None:
+            arguments = np.arange(*self.xlim, step=self.step/100)
+            values = np.array([self.function(arg) for arg in arguments])
+            self.graph = ax.plot(arguments, values, color='k')[0]
+            fig.canvas.draw()
 
-        ax.plot(arguments, values)
-        fig.canvas.draw()
+    def add_point(self, fig, ax, argument):
+        if self.coordinates_asarray is None or not(np.any(np.isin(self.coordinates_asarray[0], argument))):
+            value = self.function(argument)
+            if np.isfinite(value):
+                self.coordinates.append([argument, value])
+                self.coordinates_asarray = np.array(self.coordinates).T
+                current_coordinate = np.around(self.coordinates_asarray[:, -1], 3)
+                print(current_coordinate[0], '--->', current_coordinate[1])
+                self.points.append(ax.scatter(argument, value, color='blue'))
+                fig.canvas.draw()
+            else:
+                print(argument, '--->', value)
 
 
-functionplotter = FunctionPlotter('sin(x)', xlim = (-10,10), ylim = (-10,10), step=1)
+    def remove_sketch(self, fig):
+        if len(self.sketches) > 0:
+            self.sketches[-1].set_visible(False)
+            del self.sketches[-1]
+            fig.canvas.draw()
+
+    def remove_plot(self, fig):
+        if self.graph is not None:
+            self.graph.set_visible(False)
+            self.graph = None
+            fig.canvas.draw()
+
+    def remove_point(self, fig):
+        if len(self.points) > 0:
+            self.points[-1].set_visible(False)
+            del self.points[-1], self.coordinates[-1]
+            self.coordinates_asarray = self.coordinates_asarray[:, :-1]
+            fig.canvas.draw()
+
+    def shoot_the_moon(self, fig, ax):
+        if self.coordinates_asarray is not None and self.coordinates_asarray.shape[1] > 0:
+            if self.shoots == 0:
+                print('shooting the moon, pew... pew..!')
+                self.target = self.coordinates_asarray[:,-1][0]
+                self.shooting_direction = 1
+                self.shoots += 1
+                self.points[-1].set_color('orange')
+                fig.canvas.draw()
+            else:
+                self.add_point(fig, ax, self.target + self.shoots * self.shooting_direction * self.shooting_const)
+                self.shooting_direction = - self.shooting_direction
+                if self.shooting_direction == 1:
+                    self.shoots +=1
+
+functionplotter = FunctionPlotter('sqrt(x)', xlim = (-10,10), ylim = (-10,10), step=1)
 functionplotter.display()
 
