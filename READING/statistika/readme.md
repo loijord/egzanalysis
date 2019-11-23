@@ -27,7 +27,7 @@ Pavyzdžiui apibrėžiant, kas yra dydis matematikoje ir fizikoje, vietoj jau b�
 * Šių 4 duomenų imties charakteristikų sąvokas stengiausi sudaryti taip, kad iš jų 
 vienareikšmiškai būtų galima tiksliai apibūdinti, kuo skiriasi jų charakteringos savybės.
 * Pagrindinis apibrėžimų trūkumas yra nevienareikšmiškumas procedūrose, pagal kurias 
-nustatomos imties charakteristikos.
+nustatomos imties charakteristikų reikšmės.
 
 ## Papildomi pastebėjimai dėl sąvokų
 * [Imties](https://lt.wikipedia.org/wiki/Imtis) (liet.) ir 
