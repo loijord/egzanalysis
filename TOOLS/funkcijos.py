@@ -141,6 +141,97 @@ class FunctionPlotter:
                 if self.shooting_direction == 1:
                     self.shoots +=1
 
-functionplotter = FunctionPlotter('sqrt(x)', xlim = (-10,10), ylim = (-10,10), step=1)
+class DerivativePlotter(FunctionPlotter):
+    def __init__(self, expression, xlim = (-10,10), ylim = (-10,10), step=1, shooting_const=0.5):
+        x = sp.symbols('x')
+        self.expression = expression
+        self.function = sp.lambdify(x, self.expression, "numpy")  # pythonic function coverted from symbolic expression
+        self.xlim = xlim  # x limits of figure
+        self.ylim = ylim  # y limits of figure
+        self.step = step  # scaling of coordinates
+        self.user_input = ''  # input that is typed by keyboard until 'enter' hit
+        self.coordinates = []  # numerical points
+        self.coordinates_asarray = None
+        self.sketches = []
+        self.graph = None
+        self.points = []
+
+    def plot(self, fig, ax):
+        if self.graph is None:
+            arguments = np.arange(*self.xlim, step=self.step/100)
+            values = np.array([self.function(arg) for arg in arguments])
+            self.graph = ax.plot(arguments, values, color='k')[0]
+            fig.canvas.draw()
+
+    def display(self):
+        title = 'FUNKCIJA f(x) =' + str(self.expression)
+        fig, ax = plt.subplots(nrows=2, gridspec_kw={'height_ratios': [3, 1]})
+        # this draws axis:
+        row1, row2 = ax
+
+        plt.sca(row1)
+        row1.spines['left'].set_position('center')
+        row1.spines['bottom'].set_position('center')
+        row1.spines['right'].set_color('none')
+        row1.spines['top'].set_color('none')
+        row1.xaxis.set_ticks_position('bottom')
+        row1.yaxis.set_ticks_position('left')
+        plt.xticks(np.arange(self.xlim[0], self.xlim[1], step=self.step))
+        plt.yticks(np.arange(self.ylim[0], self.ylim[1], step=self.step))
+        plt.xlim(*self.xlim)
+        plt.ylim(*self.ylim)
+        plt.grid()
+
+        plt.sca(row2)
+        row2.spines['left'].set_position('center')
+        row2.spines['bottom'].set_position('center')
+        row2.spines['right'].set_color('none')
+        row2.spines['top'].set_color('none')
+        row2.xaxis.set_ticks_position('bottom')
+        row2.yaxis.set_ticks_position('left')
+        plt.xticks(np.arange(self.xlim[0], self.xlim[1], step=self.step))
+        plt.yticks(np.arange(self.ylim[0], self.ylim[1], step=2 * self.step))
+        plt.xlim(*self.xlim)
+        plt.ylim(*self.ylim)
+        plt.grid()
+
+        fig.canvas.mpl_connect("key_press_event", lambda event: self.refresh_plot(fig, ax, event.key))
+
+
+        #self.plot(fig, row1)
+        #self.plot(fig, row2)
+        plt.show()
+
+    def refresh_plot(self, fig, ax, key):
+        if key == 'enter':
+            inp = self.user_input.replace(',', '.')
+            if re.match(r'^-?\d+(?:\.\d+)?$', inp) is not None:
+                argument = float(inp)
+                self.add_point(fig, ax, argument)
+            else:
+                print(inp, 'is not a number')
+            self.user_input = ''
+        elif key == 'up':
+            self.sketch(fig, ax)
+        elif key == 'down':
+            self.remove_sketch(fig)
+        elif key == 'ctrl+up':
+            self.plot(fig, ax)
+        elif key == 'ctrl+down':
+            self.remove_plot(fig)
+        elif key == 'left':
+            self.remove_point(fig)
+        elif key == 'right':
+            self.shoot_the_moon(fig, ax)
+        else:
+            self.user_input += key
+
+        if key != 'right':
+            self.shoots = 0
+
+
+functionplotter = FunctionPlotter('1/x', xlim = (-10,10), ylim = (-10,10), step=1)
 functionplotter.display()
 
+#derivativeplotter = DerivativePlotter('1/x', xlim = (-10,10), ylim = (-10,10), step=1)
+#derivativeplotter.display()
