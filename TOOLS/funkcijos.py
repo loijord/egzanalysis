@@ -229,9 +229,9 @@ class DerivativePlotter(FunctionPlotter):
         if key != 'right':
             self.shoots = 0
 
-
-functionplotter = FunctionPlotter('1/x', xlim = (-10,10), ylim = (-10,10), step=1)
-functionplotter.display()
+if __name__ == '__main__':
+    functionplotter = FunctionPlotter('1/x', xlim = (-10,10), ylim = (-10,10), step=1)
+    functionplotter.display()
 
 #derivativeplotter = DerivativePlotter('1/x', xlim = (-10,10), ylim = (-10,10), step=1)
 #derivativeplotter.display()
